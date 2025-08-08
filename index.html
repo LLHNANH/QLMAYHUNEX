@@ -1,35 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Form Đăng ký</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng ký tài khoản</title>
 </head>
 <body>
-  <h2>Đăng ký tài khoản</h2>
+  <h2>Form Đăng Ký</h2>
   <form id="registerForm">
-    <input type="text" name="username" placeholder="Tài khoản" required><br>
-    <input type="text" name="displayName" placeholder="Tên người dùng" required><br>
-    <input type="password" name="password" placeholder="Mật khẩu" required><br>
-    <input type="password" name="confirmPassword" placeholder="Xác nhận mật khẩu" required><br>
+    <label>Tài khoản:</label>
+    <input type="text" id="username" required><br><br>
+    <label>Mật khẩu:</label>
+    <input type="password" id="password" required><br><br>
+    <label>Xác nhận mật khẩu:</label>
+    <input type="password" id="confirmPassword" required><br><br>
+    <label>Tên hiển thị:</label>
+    <input type="text" id="displayName" required><br><br>
     <button type="submit">Đăng ký</button>
   </form>
-  <div id="result"></div>
+
+  <p id="result"></p>
 
   <script>
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbyoSnUazIrzpvJYwf7WemJDBNDu8bdymas2vpXHv6zv8gAFHrpnTx6zfIRBgnCW6Y4V/exec"; // Dán URL Web App ở đây
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyoSnUazIrzpvJYwf7WemJDBNDu8bdymas2vpXHv6zv8gAFHrpnTx6zfIRBgnCW6Y4V/exec"; // Dán URL Web App vào đây
 
     document.getElementById("registerForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
       const formData = {
-        username: this.username.value,
-        displayName: this.displayName.value,
-        password: this.password.value,
-        confirmPassword: this.confirmPassword.value
+        username: document.getElementById("username").value,
+        password: document.getElementById("password").value,
+        confirmPassword: document.getElementById("confirmPassword").value,
+        displayName: document.getElementById("displayName").value
       };
 
       fetch(GAS_URL, {
         method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
       })
       .then(res => res.json())
@@ -37,7 +45,7 @@
         document.getElementById("result").innerText = data.message;
       })
       .catch(err => {
-        document.getElementById("result").innerText = "Lỗi: " + err;
+        document.getElementById("result").innerText = "Lỗi kết nối: " + err;
       });
     });
   </script>
