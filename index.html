@@ -99,13 +99,20 @@ function registerUser() {
   var password = document.getElementById('password').value;
   var confirm = document.getElementById('confirm').value;
 
-  // Hiển thị debug trước khi gửi
- // document.getElementById('debug').innerHTML =
-    //`<b>Dữ liệu chuẩn bị gửi:</b><br>
-     //Username: ${username || '(trống)'}<br>
-     //Role: ${role || '(trống)'}<br>
-     //Password: ${password ? '(đã nhập)' : '(trống)'}<br>
-     //Confirm: ${confirm ? '(đã nhập)' : '(trống)'}<br>`;
+  
+// Hiển thị debug trước khi gửi
+  
+//document.getElementById('debug').innerHTML =
+    
+//`<b>Dữ liệu chuẩn bị gửi:</b><br>
+     
+//Username: ${username || '(trống)'}<br>
+     
+//Role: ${role || '(trống)'}<br>
+     
+//Password: ${password ? '(đã nhập)' : '(trống)'}<br>
+     
+//Confirm: ${confirm ? '(đã nhập)' : '(trống)'}<br>`;
 
   // Kiểm tra thiếu trường trước khi gửi
   if (!username || !role || !password || !confirm) {
