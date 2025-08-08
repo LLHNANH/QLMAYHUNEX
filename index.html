@@ -3,21 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <title>Đăng ký tài khoản</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 40px;
+}
+input, button {
+  padding: 8px;
+  margin: 5px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #45a049;
+}
+#result {
+  margin-top: 15px;
+  font-weight: bold;
+}
+</style>
 </head>
 <body>
+
 <h2>Form Đăng ký</h2>
 <form id="registerForm">
-  <label>Tài khoản:</label><br>
-  <input type="text" name="taikhoan" required><br>
+  <label>Tài khoản:</label>
+  <input type="text" name="taikhoan" required>
 
-  <label>Mật khẩu:</label><br>
-  <input type="password" name="matkhau" required><br>
+  <label>Mật khẩu:</label>
+  <input type="password" name="matkhau" required>
 
-  <label>Xác nhận mật khẩu:</label><br>
-  <input type="password" name="xacnhan" required><br>
+  <label>Xác nhận mật khẩu:</label>
+  <input type="password" name="xacnhan" required>
 
-  <label>Tên người dùng:</label><br>
-  <input type="text" name="ten" required><br><br>
+  <label>Tên người dùng:</label>
+  <input type="text" name="ten" required>
 
   <button type="submit">Đăng ký</button>
 </form>
@@ -30,18 +56,20 @@ document.getElementById("registerForm").addEventListener("submit", function(e) {
 
   const formData = new FormData(this);
 
-  fetch("https://script.google.com/macros/s/AKfycb.../exec", {
+  fetch("https://script.google.com/macros/s/AKfycbyoSnUazIrzpvJYwf7WemJDBNDu8bdymas2vpXHv6zv8gAFHrpnTx6zfIRBgnCW6Y4V/exec", {
     method: "POST",
     body: formData
   })
   .then(res => res.text())
   .then(data => {
     document.getElementById("result").innerText = data;
+    this.reset();
   })
   .catch(err => {
     document.getElementById("result").innerText = "Lỗi kết nối: " + err;
   });
 });
 </script>
+
 </body>
 </html>
