@@ -58,8 +58,12 @@
     cursor: pointer;
     transition: background-color 0.3s;
   }
-  button:hover {
+  button:hover:enabled {
     background-color: #3b49b3;
+  }
+  button:disabled {
+    background-color: #888;
+    cursor: not-allowed;
   }
   #result {
     margin-top: 15px;
@@ -87,7 +91,7 @@
     <label for="confirm">Xác nhận mật khẩu</label>
     <input type="password" id="confirm" placeholder="Nhập lại mật khẩu">
   </div>
-  <button type="button" onclick="registerUser()">Đăng ký</button>
+  <button type="button" id="registerBtn" onclick="registerUser()">Đăng ký</button>
   <div id="result"></div>
 </div>
 
@@ -114,6 +118,11 @@ function registerUser() {
     return;
   }
 
+   // Bật trạng thái loading
+  btn.textContent = '⏳ Đang xử lý...';
+  btn.disabled = true;
+  resultDiv.textContent = '';
+
   // Gửi dữ liệu qua JSONP
   var script = document.createElement('script');
   script.src = 'https://script.google.com/macros/s/AKfycbyoSnUazIrzpvJYwf7WemJDBNDu8bdymas2vpXHv6zv8gAFHrpnTx6zfIRBgnCW6Y4V/exec'
@@ -133,9 +142,14 @@ function handleResponse(response) {
     resultDiv.style.color = 'red';
   }
   resultDiv.textContent = response.message;
+  
+  // Tắt trạng thái loading
+  btn.textContent = 'Đăng ký';
+  btn.disabled = false;
 }
 </script>
 
 
 </body>
 </html>
+
