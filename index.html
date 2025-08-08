@@ -100,12 +100,12 @@ function registerUser() {
   var confirm = document.getElementById('confirm').value;
 
   // Hiển thị debug trước khi gửi
-  // document.getElementById('debug').innerHTML =
-    // `<b>Dữ liệu chuẩn bị gửi:</b><br>
-     // Username: ${username || '(trống)'}<br>
-     // Role: ${role || '(trống)'}<br>
-     // Password: ${password ? '(đã nhập)' : '(trống)'}<br>
-     // Confirm: ${confirm ? '(đã nhập)' : '(trống)'}<br>`;
+  document.getElementById('debug').innerHTML =
+    `<b>Dữ liệu chuẩn bị gửi:</b><br>
+     Username: ${username || '(trống)'}<br>
+     Role: ${role || '(trống)'}<br>
+     Password: ${password ? '(đã nhập)' : '(trống)'}<br>
+     Confirm: ${confirm ? '(đã nhập)' : '(trống)'}<br>`;
 
   // Kiểm tra thiếu trường trước khi gửi
   if (!username || !role || !password || !confirm) {
@@ -139,6 +139,7 @@ function handleResponse(response) {
 
 </body>
 </html>
+
 
 
 
