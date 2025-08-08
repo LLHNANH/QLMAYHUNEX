@@ -46,24 +46,37 @@
   input:focus {
     border-color: #5563DE;
   }
+  .button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
   button {
-    width: 100%;
+    flex: 1;
     padding: 10px;
-    background-color: #5563DE;
-    color: white;
     border: none;
     border-radius: 8px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s;
+    color: white;
   }
-  button:hover:enabled {
+  #registerBtn {
+    background-color: #5563DE;
+  }
+  #registerBtn:hover:enabled {
     background-color: #3b49b3;
   }
-  button:disabled {
+  #registerBtn:disabled {
     background-color: #888;
     cursor: not-allowed;
+  }
+  #loginBtn {
+    background-color: #28a745;
+  }
+  #loginBtn:hover {
+    background-color: #1e7e34;
   }
   #result {
     margin-top: 15px;
@@ -91,50 +104,36 @@
     <label for="confirm">Xác nhận mật khẩu</label>
     <input type="password" id="confirm" placeholder="Nhập lại mật khẩu">
   </div>
-  <button type="button" id="registerBtn" onclick="registerUser()">Đăng ký</button>
-  <button type="button" >Đăng nhập</button>
+
+  <div class="button-group">
+    <button type="button" id="registerBtn" onclick="registerUser()">Đăng ký</button>
+    <button type="button" id="loginBtn" onclick="goToLogin()">Đăng nhập</button>
+  </div>
+  
   <div id="result"></div>
 </div>
 
 <script>
-function registerUser() 
-{
-  
-// Lấy dữ liệu từ form
+function registerUser() {
   var username = document.getElementById('username').value.trim();
   var role = document.getElementById('role').value.trim();
   var password = document.getElementById('password').value;
   var confirm = document.getElementById('confirm').value;
+  var btn = document.getElementById('registerBtn');
+  var resultDiv = document.getElementById('result');
 
-  
-// Hiển thị debug trước khi gửi
-  
-//document.getElementById('debug').innerHTML =
-    
-//`<b>Dữ liệu chuẩn bị gửi:</b><br>
-     
-//Username: ${username || '(trống)'}<br>
-     
-//Role: ${role || '(trống)'}<br>
-     
-//Password: ${password ? '(đã nhập)' : '(trống)'}<br>
-     
-//Confirm: ${confirm ? '(đã nhập)' : '(trống)'}<br>`;
-
-  
-// Kiểm tra thiếu trường trước khi gửi
   if (!username || !role || !password || !confirm) {
-    document.getElementById('result').style.color = 'red';
-    document.getElementById('result').textContent = 'Vui lòng nhập đầy đủ thông tin!';
+    resultDiv.style.color = 'red';
+    resultDiv.textContent = 'Vui lòng nhập đầy đủ thông tin!';
     return;
-  } // Bật trạng thái loading
+  }
+
   btn.textContent = '⏳ Đang xử lý...';
   btn.disabled = true;
   resultDiv.textContent = '';
 
-  // Gửi dữ liệu qua JSONP
   var script = document.createElement('script');
-  script.src = 'https://script.google.com/macros/s/AKfycbyoSnUazIrzpvJYwf7WemJDBNDu8bdymas2vpXHv6zv8gAFHrpnTx6zfIRBgnCW6Y4V/exec'
+  script.src = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec'
     + '?username=' + encodeURIComponent(username)
     + '&role=' + encodeURIComponent(role)
     + '&password=' + encodeURIComponent(password)
@@ -145,6 +144,8 @@ function registerUser()
 
 function handleResponse(response) {
   var resultDiv = document.getElementById('result');
+  var btn = document.getElementById('registerBtn');
+
   if (response.status === 'success') {
     resultDiv.style.color = 'green';
   } else {
@@ -152,21 +153,15 @@ function handleResponse(response) {
   }
   resultDiv.textContent = response.message;
 
-
-// Tắt trạng thái loading
   btn.textContent = 'Đăng ký';
+  btn.disabled = false;
+}
 
-  btn.disabled = false;}
+function goToLogin() {
+  // Thay đường dẫn bằng link trang đăng nhập thật
+  window.location.href = 'login.html';
+}
 </script>
-
 
 </body>
 </html>
-
-
-
-
-
-
-
-
