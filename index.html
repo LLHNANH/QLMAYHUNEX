@@ -1,70 +1,45 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Đăng ký tài khoản</title>
-  <style>
-    body{font-family:Arial,Helvetica,sans-serif;margin:24px}
-    .wrap{max-width:420px}
-    input,button{width:100%;padding:8px;margin:6px 0;box-sizing:border-box}
-    .msg{margin-top:10px;font-weight:600}
-    .err{color:#b00020}
-    .ok{color:#0b6}
-  </style>
+<meta charset="UTF-8">
+<title>Đăng ký tài khoản</title>
 </head>
 <body>
-  <div class="wrap">
-    <h2>Đăng ký tài khoản</h2>
-    <form id="form">
-      <input id="username" placeholder="Tài khoản" required />
-      <input id="displayName" placeholder="Tên người dùng" required />
-      <input id="password" type="password" placeholder="Mật khẩu" required />
-      <input id="confirmPassword" type="password" placeholder="Xác nhận mật khẩu" required />
-      <button type="submit">Đăng ký</button>
-    </form>
-    <div id="msg" class="msg"></div>
-  </div>
+<h2>Đăng ký tài khoản</h2>
+<form id="registerForm">
+  <input type="text" id="username" placeholder="Tên đăng nhập" required><br>
+  <input type="text" id="fullname" placeholder="Họ và tên" required><br>
+  <input type="password" id="password" placeholder="Mật khẩu" required><br>
+  <input type="password" id="confirmPassword" placeholder="Xác nhận mật khẩu" required><br>
+  <button type="submit">Đăng ký</button>
+</form>
+<div id="result"></div>
 
-  <script>
-    // *** Thay URL bằng Web App URL bạn deploy từ Apps Script ***
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbyoSnUazIrzpvJYwf7WemJDBNDu8bdymas2vpXHv6zv8gAFHrpnTx6zfIRBgnCW6Y4V/exec';
+<script>
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+  e.preventDefault();
 
-    const form = document.getElementById('form');
-    const msg = document.getElementById('msg');
+  var username = document.getElementById('username').value;
+  var fullname = document.getElementById('fullname').value;
+  var password = document.getElementById('password').value;
+  var confirmPassword = document.getElementById('confirmPassword').value;
 
-    function show(text, ok){ msg.textContent = text; msg.className = 'msg ' + (ok? 'ok':'err'); }
+  var script = document.createElement('script');
+  var callbackName = 'handleResponse';
+  script.src = 'https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec' +
+    '?callback=' + callbackName +
+    '&action=register' +
+    '&username=' + encodeURIComponent(username) +
+    '&fullname=' + encodeURIComponent(fullname) +
+    '&password=' + encodeURIComponent(password) +
+    '&confirmPassword=' + encodeURIComponent(confirmPassword);
 
-    form.addEventListener('submit', function(ev){
-      ev.preventDefault();
-      show('Đang gửi...', true);
+  document.body.appendChild(script);
+});
 
-      const payload = {
-        username: document.getElementById('username').value.trim(),
-        displayName: document.getElementById('displayName').value.trim(),
-        password: document.getElementById('password').value,
-        confirmPassword: document.getElementById('confirmPassword').value
-      };
-
-      fetch(GAS_URL, {
-        method: 'POST',
-        mode: 'cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(r => r.json())
-      .then(j => {
-        if (j.status === 'success') {
-          show(j.message || 'Thành công', true);
-          form.reset();
-        } else {
-          show(j.message || 'Lỗi', false);
-        }
-      })
-      .catch(err => {
-        show('Lỗi kết nối: ' + (err.message || err), false);
-      });
-    });
-  </script>
+function handleResponse(response) {
+  document.getElementById('result').innerText = response.message;
+}
+</script>
 </body>
 </html>
