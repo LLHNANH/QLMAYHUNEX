@@ -47,9 +47,12 @@
     border-color: #5563DE;
   }
   .button-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* khoảng cách giữa 2 nút */
+  }
+  .button-group button {
+  flex: 1; /* mỗi nút chiếm đều không gian */
   }
   button {
     flex: 1;
