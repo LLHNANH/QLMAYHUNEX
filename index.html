@@ -7,40 +7,40 @@
 <body>
 <h2>Đăng ký tài khoản</h2>
 <form id="registerForm">
-  <input type="text" id="username" placeholder="Tên đăng nhập" required><br>
-  <input type="text" id="fullname" placeholder="Họ và tên" required><br>
-  <input type="password" id="password" placeholder="Mật khẩu" required><br>
-  <input type="password" id="confirmPassword" placeholder="Xác nhận mật khẩu" required><br>
-  <button type="submit">Đăng ký</button>
+  <input type="text" id="username" placeholder="Tên đăng nhập"><br>
+  <input type="text" id="role" placeholder="Vai trò"><br>
+  <input type="password" id="password" placeholder="Mật khẩu"><br>
+  <input type="password" id="confirm" placeholder="Xác nhận mật khẩu"><br>
+  <button type="button" onclick="registerUser()">Đăng ký</button>
 </form>
 <div id="result"></div>
 
 <script>
-document.getElementById('registerForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-
-  var username = document.getElementById('username').value;
-  var fullname = document.getElementById('fullname').value;
+function registerUser() {
+  var username = document.getElementById('username').value.trim();
+  var role = document.getElementById('role').value.trim();
   var password = document.getElementById('password').value;
-  var confirmPassword = document.getElementById('confirmPassword').value;
+  var confirm = document.getElementById('confirm').value;
 
   var script = document.createElement('script');
-  var callbackName = 'handleResponse';
-  script.src = 'https://script.google.com/macros/s/AKfycbyoSnUazIrzpvJYwf7WemJDBNDu8bdymas2vpXHv6zv8gAFHrpnTx6zfIRBgnCW6Y4V/exec' +
-    '?callback=' + callbackName +
-    '&action=register' +
-    '&username=' + encodeURIComponent(username) +
-    '&fullname=' + encodeURIComponent(fullname) +
-    '&password=' + encodeURIComponent(password) +
-    '&confirmPassword=' + encodeURIComponent(confirmPassword);
-
+  script.src = 'https://script.google.com/macros/s/AKfycbyoSnUazIrzpvJYwf7WemJDBNDu8bdymas2vpXHv6zv8gAFHrpnTx6zfIRBgnCW6Y4V/exec'
+    + '?username=' + encodeURIComponent(username)
+    + '&role=' + encodeURIComponent(role)
+    + '&password=' + encodeURIComponent(password)
+    + '&confirm=' + encodeURIComponent(confirm)
+    + '&callback=handleResponse';
   document.body.appendChild(script);
-});
+}
 
 function handleResponse(response) {
-  document.getElementById('result').innerText = response.message;
+  var resultDiv = document.getElementById('result');
+  if (response.status === 'success') {
+    resultDiv.style.color = 'green';
+  } else {
+    resultDiv.style.color = 'red';
+  }
+  resultDiv.textContent = response.message;
 }
 </script>
 </body>
 </html>
-
