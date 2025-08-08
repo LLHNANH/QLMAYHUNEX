@@ -4,25 +4,101 @@
 <meta charset="UTF-8">
 <title>Đăng ký tài khoản</title>
 <style>
-  body { font-family: Arial; margin: 20px; }
-  input { margin: 5px 0; padding: 6px; width: 250px; }
-  button { padding: 8px 15px; margin-top: 10px; }
-  #result { margin-top: 15px; font-weight: bold; }
-  #debug { margin-top: 10px; font-size: 14px; color: #555; }
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ABE2, #5563DE);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .container {
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    width: 350px;
+  }
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  .form-group {
+    margin-bottom: 15px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #444;
+  }
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  input:focus {
+    border-color: #5563DE;
+  }
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #5563DE;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #3b49b3;
+  }
+  #result {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
+  }
+  #debug {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #666;
+    background: #f8f8f8;
+    padding: 8px;
+    border-radius: 6px;
+  }
 </style>
 </head>
 <body>
-<h2>Đăng ký tài khoản</h2>
-<form id="registerForm" onsubmit="return false;">
-  <input type="text" id="username" placeholder="Tên đăng nhập"><br>
-  <input type="text" id="role" placeholder="Vai trò"><br>
-  <input type="password" id="password" placeholder="Mật khẩu"><br>
-  <input type="password" id="confirm" placeholder="Xác nhận mật khẩu"><br>
-  <button type="button" onclick="registerUser()">Đăng ký</button>
-</form>
 
-<div id="result"></div>
-<div id="debug"></div>
+<div class="container">
+  <h2>Đăng ký tài khoản</h2>
+  <div class="form-group">
+    <label for="username">Tên đăng nhập</label>
+    <input type="text" id="username" placeholder="Nhập tên đăng nhập">
+  </div>
+  <div class="form-group">
+    <label for="role">Vai trò</label>
+    <input type="text" id="role" placeholder="Nhập vai trò (VD: User)">
+  </div>
+  <div class="form-group">
+    <label for="password">Mật khẩu</label>
+    <input type="password" id="password" placeholder="Nhập mật khẩu">
+  </div>
+  <div class="form-group">
+    <label for="confirm">Xác nhận mật khẩu</label>
+    <input type="password" id="confirm" placeholder="Nhập lại mật khẩu">
+  </div>
+  <button type="button" onclick="registerUser()">Đăng ký</button>
+  <div id="result"></div>
+  <div id="debug"></div>
+</div>
 
 <script>
 function registerUser() {
@@ -49,7 +125,7 @@ function registerUser() {
 
   // Gửi dữ liệu qua JSONP
   var script = document.createElement('script');
-  script.src = 'https://script.google.com/macros/s/AKfycbyoSnUazIrzpvJYwf7WemJDBNDu8bdymas2vpXHv6zv8gAFHrpnTx6zfIRBgnCW6Y4V/exec'
+  script.src = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec'
     + '?username=' + encodeURIComponent(username)
     + '&role=' + encodeURIComponent(role)
     + '&password=' + encodeURIComponent(password)
@@ -68,5 +144,6 @@ function handleResponse(response) {
   resultDiv.textContent = response.message;
 }
 </script>
+
 </body>
 </html>
