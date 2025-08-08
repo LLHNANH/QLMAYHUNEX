@@ -58,8 +58,12 @@
     cursor: pointer;
     transition: background-color 0.3s;
   }
-  button:hover {
+  button:hover:enabled {
     background-color: #3b49b3;
+  }
+  button:disabled {
+    background-color: #888;
+    cursor: not-allowed;
   }
   #result {
     margin-top: 15px;
@@ -72,12 +76,12 @@
 <div class="container">
   <h2>Đăng ký tài khoản</h2>
   <div class="form-group">
-    <label for="username">Tài khoản đăng nhập</label>
+    <label for="username">Tên đăng nhập</label>
     <input type="text" id="username" placeholder="Nhập tên đăng nhập">
   </div>
   <div class="form-group">
-    <label for="role">Tên người dùng</label>
-    <input type="text" id="role" placeholder="Nhập tên người dùng (VD: Nguyễn Văn A)">
+    <label for="role">Vai trò</label>
+    <input type="text" id="role" placeholder="Nhập vai trò (VD: User)">
   </div>
   <div class="form-group">
     <label for="password">Mật khẩu</label>
@@ -87,13 +91,15 @@
     <label for="confirm">Xác nhận mật khẩu</label>
     <input type="password" id="confirm" placeholder="Nhập lại mật khẩu">
   </div>
-  <button type="button" onclick="registerUser()">Đăng ký</button>
+  <button type="button" id="registerBtn" onclick="registerUser()">Đăng ký</button>
   <div id="result"></div>
 </div>
 
 <script>
-function registerUser() {
-  // Lấy dữ liệu từ form
+function registerUser() 
+{
+  
+// Lấy dữ liệu từ form
   var username = document.getElementById('username').value.trim();
   var role = document.getElementById('role').value.trim();
   var password = document.getElementById('password').value;
@@ -114,12 +120,16 @@ function registerUser() {
      
 //Confirm: ${confirm ? '(đã nhập)' : '(trống)'}<br>`;
 
-  // Kiểm tra thiếu trường trước khi gửi
+  
+// Kiểm tra thiếu trường trước khi gửi
   if (!username || !role || !password || !confirm) {
     document.getElementById('result').style.color = 'red';
     document.getElementById('result').textContent = 'Vui lòng nhập đầy đủ thông tin!';
     return;
-  }
+  } // Bật trạng thái loading
+  btn.textContent = '⏳ Đang xử lý...';
+  btn.disabled = true;
+  resultDiv.textContent = '';
 
   // Gửi dữ liệu qua JSONP
   var script = document.createElement('script');
@@ -140,7 +150,11 @@ function handleResponse(response) {
     resultDiv.style.color = 'red';
   }
   resultDiv.textContent = response.message;
-}
+
+
+// Tắt trạng thái loading
+  btn.textContent = 'Đăng ký';
+  btn.disabled = false;}
 </script>
 
 
