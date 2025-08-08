@@ -3,25 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <title>Đăng ký tài khoản</title>
+<style>
+  body { font-family: Arial; margin: 20px; }
+  input { margin: 5px 0; padding: 6px; width: 250px; }
+  button { padding: 8px 15px; margin-top: 10px; }
+  #result { margin-top: 15px; font-weight: bold; }
+  #debug { margin-top: 10px; font-size: 14px; color: #555; }
+</style>
 </head>
 <body>
 <h2>Đăng ký tài khoản</h2>
-<form id="registerForm">
+<form id="registerForm" onsubmit="return false;">
   <input type="text" id="username" placeholder="Tên đăng nhập"><br>
   <input type="text" id="role" placeholder="Vai trò"><br>
   <input type="password" id="password" placeholder="Mật khẩu"><br>
   <input type="password" id="confirm" placeholder="Xác nhận mật khẩu"><br>
   <button type="button" onclick="registerUser()">Đăng ký</button>
 </form>
+
 <div id="result"></div>
+<div id="debug"></div>
 
 <script>
 function registerUser() {
+  // Lấy dữ liệu từ form
   var username = document.getElementById('username').value.trim();
   var role = document.getElementById('role').value.trim();
   var password = document.getElementById('password').value;
   var confirm = document.getElementById('confirm').value;
 
+  // Hiển thị debug trước khi gửi
+  document.getElementById('debug').innerHTML =
+    `<b>Dữ liệu chuẩn bị gửi:</b><br>
+     Username: ${username || '(trống)'}<br>
+     Role: ${role || '(trống)'}<br>
+     Password: ${password ? '(đã nhập)' : '(trống)'}<br>
+     Confirm: ${confirm ? '(đã nhập)' : '(trống)'}<br>`;
+
+  // Kiểm tra thiếu trường trước khi gửi
+  if (!username || !role || !password || !confirm) {
+    document.getElementById('result').style.color = 'red';
+    document.getElementById('result').textContent = 'Vui lòng nhập đầy đủ thông tin!';
+    return;
+  }
+
+  // Gửi dữ liệu qua JSONP
   var script = document.createElement('script');
   script.src = 'https://script.google.com/macros/s/AKfycbyoSnUazIrzpvJYwf7WemJDBNDu8bdymas2vpXHv6zv8gAFHrpnTx6zfIRBgnCW6Y4V/exec'
     + '?username=' + encodeURIComponent(username)
