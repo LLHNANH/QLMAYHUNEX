@@ -19,14 +19,15 @@
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     width: 350px;
+    text-align: center;
   }
   h2 {
-    text-align: center;
     color: #333;
     margin-bottom: 20px;
   }
   .form-group {
     margin-bottom: 15px;
+    text-align: left;
   }
   label {
     display: block;
@@ -62,16 +63,7 @@
   }
   #result {
     margin-top: 15px;
-    text-align: center;
     font-weight: bold;
-  }
-  #debug {
-    margin-top: 10px;
-    font-size: 13px;
-    color: #666;
-    background: #f8f8f8;
-    padding: 8px;
-    border-radius: 6px;
   }
 </style>
 </head>
@@ -97,35 +89,23 @@
   </div>
   <button type="button" onclick="registerUser()">Đăng ký</button>
   <div id="result"></div>
-  <div id="debug"></div>
 </div>
 
 <script>
 function registerUser() {
-  // Lấy dữ liệu từ form
   var username = document.getElementById('username').value.trim();
   var role = document.getElementById('role').value.trim();
   var password = document.getElementById('password').value;
   var confirm = document.getElementById('confirm').value;
 
-  // Hiển thị debug trước khi gửi
-  document.getElementById('debug').innerHTML =
-    `<b>Dữ liệu chuẩn bị gửi:</b><br>
-     Username: ${username || '(trống)'}<br>
-     Role: ${role || '(trống)'}<br>
-     Password: ${password ? '(đã nhập)' : '(trống)'}<br>
-     Confirm: ${confirm ? '(đã nhập)' : '(trống)'}<br>`;
-
-  // Kiểm tra thiếu trường trước khi gửi
   if (!username || !role || !password || !confirm) {
     document.getElementById('result').style.color = 'red';
     document.getElementById('result').textContent = 'Vui lòng nhập đầy đủ thông tin!';
     return;
   }
 
-  // Gửi dữ liệu qua JSONP
   var script = document.createElement('script');
-  script.src = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec'
+  script.src = 'https://script.google.com/macros/s/AKfycbyoSnUazIrzpvJYwf7WemJDBNDu8bdymas2vpXHv6zv8gAFHrpnTx6zfIRBgnCW6Y4V/exec'
     + '?username=' + encodeURIComponent(username)
     + '&role=' + encodeURIComponent(role)
     + '&password=' + encodeURIComponent(password)
