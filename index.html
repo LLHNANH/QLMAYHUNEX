@@ -93,17 +93,28 @@
 
 <script>
 function registerUser() {
+  // Lấy dữ liệu từ form
   var username = document.getElementById('username').value.trim();
   var role = document.getElementById('role').value.trim();
   var password = document.getElementById('password').value;
   var confirm = document.getElementById('confirm').value;
 
+  // Hiển thị debug trước khi gửi
+  // document.getElementById('debug').innerHTML =
+    // `<b>Dữ liệu chuẩn bị gửi:</b><br>
+     // Username: ${username || '(trống)'}<br>
+     // Role: ${role || '(trống)'}<br>
+     // Password: ${password ? '(đã nhập)' : '(trống)'}<br>
+     // Confirm: ${confirm ? '(đã nhập)' : '(trống)'}<br>`;
+
+  // Kiểm tra thiếu trường trước khi gửi
   if (!username || !role || !password || !confirm) {
     document.getElementById('result').style.color = 'red';
     document.getElementById('result').textContent = 'Vui lòng nhập đầy đủ thông tin!';
     return;
   }
 
+  // Gửi dữ liệu qua JSONP
   var script = document.createElement('script');
   script.src = 'https://script.google.com/macros/s/AKfycbyoSnUazIrzpvJYwf7WemJDBNDu8bdymas2vpXHv6zv8gAFHrpnTx6zfIRBgnCW6Y4V/exec'
     + '?username=' + encodeURIComponent(username)
@@ -124,6 +135,7 @@ function handleResponse(response) {
   resultDiv.textContent = response.message;
 }
 </script>
+
 
 </body>
 </html>
