@@ -58,12 +58,8 @@
     cursor: pointer;
     transition: background-color 0.3s;
   }
-  button:hover:enabled {
+  button:hover {
     background-color: #3b49b3;
-  }
-  button:disabled {
-    background-color: #888;
-    cursor: not-allowed;
   }
   #result {
     margin-top: 15px;
@@ -118,11 +114,6 @@ function registerUser() {
     return;
   }
 
-   // Bật trạng thái loading
-  btn.textContent = '⏳ Đang xử lý...';
-  btn.disabled = true;
-  resultDiv.textContent = '';
-
   // Gửi dữ liệu qua JSONP
   var script = document.createElement('script');
   script.src = 'https://script.google.com/macros/s/AKfycbyoSnUazIrzpvJYwf7WemJDBNDu8bdymas2vpXHv6zv8gAFHrpnTx6zfIRBgnCW6Y4V/exec'
@@ -143,13 +134,11 @@ function handleResponse(response) {
   }
   resultDiv.textContent = response.message;
   
-  // Tắt trạng thái loading
-  btn.textContent = 'Đăng ký';
-  btn.disabled = false;
 }
 </script>
 
 
 </body>
 </html>
+
 
